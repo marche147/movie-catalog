@@ -1,11 +1,33 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
+import { Layout, Menu } from 'antd';
+import 'antd/dist/antd.css';
+
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu, Item } = Menu;
+
 import Home from './screens/home';
+import Info from './screens/info';
 import List from './screens/list';
+import NotFound from './screens/notfound';
+
+import './App.css'
+
 class App extends Component {
-  state = {
-    data: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: "",
+      selection: "1",
+    };
+    this.doOnClick = this.doOnClick.bind(this);
+  }
+
+  doOnClick = (e) => {
+    this.setState({
+      selection: e.key
+    });
+  }
 
   componentDidMount(){
     this.callBackendAPI()
@@ -27,17 +49,23 @@ class App extends Component {
   render() {
     return (
       <div>
-      <div className="App">
-        <h1> app </h1>
-      </div>
-      <div className="home">
-        <h1> <Link to = "/home"> home </Link> </h1>
-        <Route path="/home" component={Home} />
-      </div>
-      <div className="list">
-        <h1> <Link to = "/list"> Movie List </Link> </h1>
-        <Route path="/list" component={List} />
-      </div>
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider>
+            <div id="logo">
+              <img src="/logo.svg" />
+            </div>
+            <Menu theme="dark" mode="inline" onClick={ this.doOnClick } defaultSelectedKeys={ this.state.selection }>
+              <Item key="1"><Link to="/home">Home</Link></Item>
+              <Item key="2"><Link to="/list">List</Link></Item>
+            </Menu>
+          </Sider>
+          <Content>
+            <Switch>
+              <Route path="/home" component={Home} />
+              <Route path="/list" component={List} />
+            </Switch>
+          </Content>
+        </Layout>
       </div>
     );
   }
