@@ -139,7 +139,7 @@ class MovieReviewsIMDb(scrapy.Spider):
 			yield item
 
 class MovieReviewsRT(scrapy.Spider):
-	#custom_settings = {'ITEM_PIPELINES': {'rottenTomatoes.pipelines.MovieReviewPipeline': 300}}
+	custom_settings = {'ITEM_PIPELINES': {'rottenTomatoes.pipelines.MovieReviewPipeline': 300}}
 
 	prefix = "https://www.rottentomatoes.com"
 	name = 'movieReviewsRT'
@@ -153,7 +153,7 @@ class MovieReviewsRT(scrapy.Spider):
 
 	def parse(self, response):
 		movies = scrapy.Selector(response).xpath('//*[@id="top_movies_main"]/div/table/tr')
-		for m in movies[0:1]:
+		for m in movies:
 			s = self.prefix + m.xpath('.//td[3]/a/@href').extract_first()
 			a = s + '/reviews?type=user'
 			req = scrapy.Request(url= a, callback = self.parse_item)
@@ -162,14 +162,16 @@ class MovieReviewsRT(scrapy.Spider):
 	def parse_item(self, response):
 		title = response.xpath('//*[@id="main_container"]/div[1]/section/div/div[1]/h2/a/text()').extract_first().lower().strip()
 		reviews = scrapy.Selector(response).xpath('//*[@id="movieUserReviewsContent"]/ul/li')
-
+		index = 1
 		for r in reviews:
 			item = MovieReviewItem()
 			item['title'] = title
 			item['website'] = "rottentomatoes"
 			c = r.xpath('.//div[2]/p[1]/text()').extract_first()
+			index = index+1
 			if(c): c = c.strip()
 			item['review_content'] = c
+			item['review_title'] = title +"reviews" + str(index)
 			yield item
 
 
