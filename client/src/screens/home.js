@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+/* eslint-disable */
 import "./styles.css";
 import img1 from './pic/1.png';
 import img2 from './pic/2.png';

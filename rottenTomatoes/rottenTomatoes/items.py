@@ -41,3 +41,4 @@ class MovieReviewItem(scrapy.Item):
 	review_content = scrapy.Field()
 	review_title = scrapy.Field()
 	website = scrapy.Field()
+	score = scrapy.Field()

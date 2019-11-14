@@ -17,7 +17,7 @@ class TopMovies extends Component {
     const resp = await fetch("/top_movie");
     const body = resp.json();
 
-    if(resp.status != 200) {
+    if(resp.status !== 200) {
       return [];
     }
     return body;

@@ -1,6 +1,8 @@
 import scrapy
 from rottenTomatoes.items import TopRankingItem, MovieDetailsItem, MovieReviewItem
 import re
+from allennlp.predictors.predictor import Predictor
+predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/sst-2-basic-classifier-glove-2019.06.27.tar.gz")
 
 class MovieInfo(scrapy.Spider):
 	custom_settings = {'ITEM_PIPELINES': {'rottenTomatoes.pipelines.MovieInfoPipeline': 300}}
@@ -129,13 +131,18 @@ class MovieReviewsIMDb(scrapy.Spider):
 		for r in reviews:
 			item = MovieReviewItem()
 			item['title'] = title
+			item['score'] = 0
 			item['website'] = "imdb"
 			t = r.xpath('.//div/div[1]/a/text()').extract_first()
 			if(t): t = t.strip()
 			item['review_title'] = t
 			c = r.xpath('.//div[3]/div[1]/text()').extract_first()
-			if(c): c = c.strip()
+			if(c):
+				c = c.strip()
+			if(c):
+				item['score'] = predictor.predict(sentence=c)['label']
 			item['review_content'] = c
+			
 			yield item
 
 class MovieReviewsRT(scrapy.Spider):
@@ -166,10 +173,14 @@ class MovieReviewsRT(scrapy.Spider):
 		for r in reviews:
 			item = MovieReviewItem()
 			item['title'] = title
+			item['score'] = 0
 			item['website'] = "rottentomatoes"
 			c = r.xpath('.//div[2]/p[1]/text()').extract_first()
 			index = index+1
-			if(c): c = c.strip()
+			if(c):
+				c = c.strip()
+			if(c):
+				item['score'] = predictor.predict(sentence=c)['label']
 			item['review_content'] = c
 			item['review_title'] = title +"reviews" + str(index)
 			yield item

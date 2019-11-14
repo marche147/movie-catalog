@@ -66,6 +66,8 @@ class App extends Component {
               <Route path="/home" component={Home} />
               <Route path="/list" component={List} />
               <Route path="/top" component={TopMovies} />
+              <Route path="/info/:id" component={Info} />
+              <Route path="/notfound" component={NotFound} />
             </Switch>
           </Content>
         </Layout>

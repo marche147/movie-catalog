@@ -52,7 +52,7 @@ class MovieReviewPipeline(object):
 	def __init__(self):
 		self.client = MongoClient(connection)
 		self.db = self.client.get_database('movies')
-		self.collection = self.db['Reviews']
+		self.collection = self.db['ReviewsSA']
 		self.collection.ensure_index([('title', pymongo.HASHED)], collation = Collation(locale = 'en_US', strength=CollationStrength.SECONDARY))
 	def process_item(self, item, spider):
 		valid = True
@@ -63,7 +63,7 @@ class MovieReviewPipeline(object):
 		if valid:
 			#self.db['TopMovies'].insert_one(dict(item))
 			if(item['review_title']):
-				self.db['Reviews'].update({'review_title':item['review_title']}, {'$set': dict(item)},multi = True, upsert = True)
+				self.collection.update({'review_title':item['review_title']}, {'$set': dict(item)},multi = True, upsert = True)
 			#self.logger.msg("reviews info added", level = log.DEBUG, spider = spider)
 		return item
 

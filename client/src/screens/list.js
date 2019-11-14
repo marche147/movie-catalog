@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom'
 import Info from './info';
+/* eslint-disable */
 
 const movies = [{"id": 1, "name": "Malificent2", "year": 2019, "director": "Joachim Ronning", "cast": "Angelina Jolie"},
 {"id": 2, "name": "Once Upon A Time in Hollywood", "year": 2019, "director": "Quentin Tarantino", "cast": "Brad Pitt"},
