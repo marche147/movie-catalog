@@ -63,11 +63,11 @@ class App extends Component {
           </Sider>
           <Content>
             <Switch>
-              <Route path="/home" component={Home} />
+              <Route exact path="/" component={Home} />
               <Route path="/list" component={List} />
               <Route path="/top" component={TopMovies} />
               <Route path="/info/:id" component={Info} />
-              <Route path="/notfound" component={NotFound} />
+              <Route component={NotFound} />
             </Switch>
           </Content>
         </Layout>
