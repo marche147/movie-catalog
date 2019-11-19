@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Route, Link, Switch } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
@@ -64,6 +65,7 @@ class App extends Component {
           <Content>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/home" component={Home} />
               <Route path="/list" component={List} />
               <Route path="/top" component={TopMovies} />
               <Route path="/info/:id" component={Info} />

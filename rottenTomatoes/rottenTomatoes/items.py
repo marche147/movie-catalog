@@ -42,3 +42,10 @@ class MovieReviewItem(scrapy.Item):
 	review_title = scrapy.Field()
 	website = scrapy.Field()
 	score = scrapy.Field()
+	user_name = scrapy.Field()
+	post_time = scrapy.Field()
+
+
+
+
+

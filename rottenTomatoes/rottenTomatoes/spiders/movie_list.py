@@ -132,6 +132,8 @@ class MovieReviewsIMDb(scrapy.Spider):
 			item = MovieReviewItem()
 			item['title'] = title
 			item['score'] = 0
+			item['user_name'] = r.xpath('.//div[1]/div[1]/div[2]/span[1]/a/text()').extract_first()
+			item['post_time'] = r.xpath('.//div[1]/div[1]/div[2]/span[2]/text()').extract_first()
 			item['website'] = "imdb"
 			t = r.xpath('.//div/div[1]/a/text()').extract_first()
 			if(t): t = t.strip()

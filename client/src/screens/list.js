@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom'
 import Info from './info';
+import "./list.css";
 /* eslint-disable */
 
 const movies = [{"id": 1, "name": "joker", "year": 2019, "director": "Joachim Ronning", "cast": "Angelina Jolie"},
@@ -15,7 +16,8 @@ class List extends Component{
   render() {
     const listItems = movies.map((m) => <li key={m.id}> <Link to={`/info/${m.name}`}> {m.name} </Link></li>)
     return (
-        <div className="home">
+        <div className="list">
+
           {listItems}
             
           <Route path="/info/:id" component={Info} />
