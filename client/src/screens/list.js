@@ -44,7 +44,6 @@ class List extends Component {
     fetch(text)
       .then(res => res.json())
       .then(
-
         (result) => {
           console.log(result);
           this.setState({
@@ -66,10 +65,9 @@ class List extends Component {
         }
       )
   }
+
   constructor(props) {
-
     super(props);
-
     this.state = {
       error: null,
       isLoaded: false,
@@ -90,13 +88,12 @@ class List extends Component {
       items: []
     };
 
-    this.getapi("http://localhost:4200/list");
+    this.getapi("/list");
     this.forceUpdate()
   }
 
   componentDidMount() {
-    this.getapi("http://localhost:4200/list");
-
+    this.getapi("/list");
   }
 
   onSearch = searchText => {
@@ -133,7 +130,7 @@ class List extends Component {
 
 
     //const listItems = movies.map((m) => <li key={m.id}> <Link to={`/info/${m.name}`}> {m.name} </Link></li>)
-    let listItems = movies.map((m) =>
+    let listItems = this.state.items.map((m) =>
       <div class="display">
         <div className="gutter-box">
 
@@ -141,18 +138,18 @@ class List extends Component {
             <Card
               hoverable
               style={{ width: 200 }}
-              cover={<img alt={m.name} src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+              cover={<img alt={m.title} src={m.img_url} />}
             >
-              <Meta title={m.name} description={m.year} />
-              <li key={m.id}> <Link to={`/info/${m.name}`}> info </Link></li>
+              <Meta title={m.title} description={m.release_date} />
+              <li key={m._id}> <Link to={`/info/${m._id}`}> info </Link></li>
             </Card>
           </Col>
 
         </div>
 
       </div>
-    )
-    //console.log(itemsmap);
+    );
+
     if (error) {
       return (<div className="container">
         <div className="search">
