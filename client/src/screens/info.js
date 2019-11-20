@@ -7,10 +7,14 @@ const movieList = [
 {"_id":{"$oid":"5dc4cb64b91b4bca44b85fd8"},"title":"once upon a time in hollywood","cast":"Leonardo DiCaprio","certificate":"R","director":"Quentin Tarantino","genre":["Comedy","Drama"],"img_url":"https://m.media-amazon.com/images/M/MV5BOTg4ZTNkZmUtMzNlZi00YmFjLTk1MmUtNWQwNTM0YjcyNTNkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_UX182_CR0,0,182,268_AL_.jpg","plot":null,"release_date":null,"runtime":"161 min"}
 ];
 
-class Info extends Component{
-  // state = {
-  //   data: []
-  // };
+class Info extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
+
+  fetch = async () => {
+  }
 
   render() {
     const { match: { params } } = this.props;
