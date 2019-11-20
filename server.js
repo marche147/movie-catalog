@@ -29,7 +29,6 @@ let movieInfoSchema = new Schema({
 let MovieInfo = db.model('MovieInfo', movieInfoSchema, 'MovieInfo');
 
 /* Review Info schema */
-// XXX: What is the corresponding movie for each review...
 let reviewSchema = new Schema({
   review_title: String,
   review_content: String,
@@ -37,6 +36,15 @@ let reviewSchema = new Schema({
   website: String
 });
 let Review = db.model('Review', reviewSchema, 'Reviews');
+
+let reviewsaSchema = new Schema({
+  review_title: String,
+  review_content: String,
+  score: String,
+  title: String,
+  website: String,
+});
+let ReviewsSA = db.model('ReviewsSA', reviewsaSchema, 'ReviewsSA');
 
 /* Top Movie schema */
 let topMovieSchema = new Schema({
@@ -67,17 +75,19 @@ app.get('/express_backend', (req, res) => {
 });
 
 /* Movie info query */
-app.get('/movie_info', (req, res) => {
-  res.send("TODO");
+app.get('/list', async (req, res) => {
+  let data = await MovieInfo.find().lean();
+  res.send(JSON.stringify(data));
 });
 
 /* Review query */
 app.get('/review', async (req, res) => {
-  res.send("TODO");
+  let data = await ReviewsSA.find().lean();
+  res.send(JSON.stringify(data));
 });
 
 /* Top movie query */
-app.get('/top_movie', async (req, res) => {
+app.get('/top', async (req, res) => {
   let data = await TopMovie.find().lean();
   res.send(JSON.stringify(data));
 });

@@ -7,7 +7,6 @@ import img3 from './pic/3.png';
 import img4 from './pic/4.jpg';
 
 
-
 class Home extends Component{
   state = {
     data: null
