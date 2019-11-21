@@ -69,13 +69,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
-// create a GET route
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-});
-
 /* Movie info query */
-app.get('/list', async (req, res) => {
+app.get('/movies', async (req, res) => {
   let data = await MovieInfo.find().lean();
   res.send(JSON.stringify(data));
 });
@@ -91,4 +86,5 @@ app.get('/top', async (req, res) => {
   let data = await TopMovie.find().lean();
   res.send(JSON.stringify(data));
 });
+
 

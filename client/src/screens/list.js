@@ -10,6 +10,7 @@ import { Input } from 'antd';
 import { BackTop } from 'antd';
 import { Pagination } from 'antd';
 import { Spin } from 'antd';
+import md5 from 'crypto-js/md5';
 
 /* eslint-disable */
 const movies = [{ "id": 1, "name": "joker", "year": 2019, "director": "Joachim Ronning", "cast": "Angelina Jolie" },
@@ -26,7 +27,6 @@ const { Option } = Select;
 //function onSelect(value) {
 //console.log('onSelect', value);
 //}
-
 
 /*
 function handleChange(value) {
@@ -112,7 +112,7 @@ class List extends Component {
   }
 
   clear() {
-    this.getapi("/list")
+    this.getapi("/movies")
   }
 
   match(content) {
@@ -139,7 +139,7 @@ class List extends Component {
   componentDidMount() {
     //let m=this.state.items;
     //console.log(`initialize ${m}`);
-    this.getapi("/list");
+    this.getapi("/movies");
 
     //let m=this.state.items;
   }
@@ -186,8 +186,8 @@ class List extends Component {
               style={{ width: 200 }}
               cover={<img alt={m.title} src={m.img_url} />}
             >
-              <Meta title={m.title} description={m.cast} />
-              <li key={m._id}> <Link to={`/info/${m._id}`}> info </Link></li>
+              <Meta title={m.title} description={m.release_date} />
+              <li key={md5(m.title)}> <Link to={`/info/${md5(m.title)}`}> info </Link></li>
             </Card>
           </Col>
 
