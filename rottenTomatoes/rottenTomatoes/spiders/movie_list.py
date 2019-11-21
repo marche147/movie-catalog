@@ -27,7 +27,9 @@ class MovieInfo(scrapy.Spider):
 			item = MovieDetailsItem()
 			item['title'] = m.xpath('.//div[3]/h3/a/text()').extract_first().lower()
 			item['certificate'] = m.xpath('.//div[3]/p[1]/span[1]/text()').extract_first()
-			item['runtime'] = m.xpath('.//div[3]/p[1]/span[3]/text()').extract_first()
+			runtime = m.xpath('.//div[3]/p[1]/span[3]/text()').extract_first()
+			item['runtime'] = ""
+			if(runtime): item['runtime'] = int(runtime[:-4])
 			g = m.xpath('.//div[3]/p[1]/span[5]/text()').extract_first()
 			if(g): g = self.str_to_list(g.strip())
 			item['genre'] = g
