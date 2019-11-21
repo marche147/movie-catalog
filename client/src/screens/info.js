@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
+import md5 from 'crypto-js/md5';
 
 const movieList = [
 {"_id":{"$oid":"5dc4cb47b91b4bca44b7f38a"},"title":"joker","cast":"Joaquin Phoenix","certificate":"R","director":"Todd Phillips","genre":["Crime","Drama","Thriller"],"img_url":"https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_UX182_CR0,0,182,268_AL_.jpg","plot":"In Gotham City, mentally-troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: \"The Joker\".","release_date":"4 October 2019 (USA)","runtime":"122 min"},
@@ -13,27 +14,24 @@ class Info extends Component {
     this.state = { data: null };
   }
 
+  componentDidMount() {
+    this.fetch().then((data) => this.setState({data: data})).catch((reason) => console.log(reason));
+  }
+
   fetch = async () => {
+    const resp = await fetch("/list");
+    if(resp.status !== 200) {
+      return [];
+    }
+    const body = resp.json();
+    return body;
   }
 
   render() {
     const { match: { params } } = this.props;
-    console.log(this.params)
     const data = movieList.find((item) => { return item.title == params.id; });
     return (
-      <div className='home' style={{position:'absolute', left:'55px', color: 'dark grey'}}>
-        <h1> {data.name} ({data.year})</h1>
-        <p> IMDB---{data.IMDB}/10 </p>
-        <p> Rotten Tomatoes---{data.RT}</p>
-        <div>
-            <img alt={data.title}
-            src={data.image_url}
-            height = {300}/>
-            <h3>Director: {data.director}</h3>
-            <h4>Cast: {data.cast}</h4>
-            <p>Description: {data.plot}</p>
-        </div>
-      </div>
+      <h1>TODO</h1>
     );
   }
 }

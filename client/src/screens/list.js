@@ -10,6 +10,7 @@ import { Input } from 'antd';
 import { BackTop } from 'antd';
 import { Pagination } from 'antd';
 import { Spin } from 'antd';
+import md5 from 'crypto-js/md5';
 
 /* eslint-disable */
 const movies = [{ "id": 1, "name": "joker", "year": 2019, "director": "Joachim Ronning", "cast": "Angelina Jolie" },
@@ -141,7 +142,7 @@ class List extends Component {
               cover={<img alt={m.title} src={m.img_url} />}
             >
               <Meta title={m.title} description={m.release_date} />
-              <li key={m._id}> <Link to={`/info/${m._id}`}> info </Link></li>
+              <li key={md5(m.title)}> <Link to={`/info/${md5(m.title)}`}> info </Link></li>
             </Card>
           </Col>
 
