@@ -70,7 +70,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 /* Movie info query */
-app.get('/list', async (req, res) => {
+app.get('/movies', async (req, res) => {
   let data = await MovieInfo.find().lean();
   res.send(JSON.stringify(data));
 });

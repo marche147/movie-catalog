@@ -27,7 +27,6 @@ class TopMovies extends Component {
     if(resp.status !== 200) {
       return [];
     }
-    
     const body = resp.json();
     return body;
   }

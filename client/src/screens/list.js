@@ -28,7 +28,6 @@ const { Option } = Select;
 //console.log('onSelect', value);
 //}
 
-
 /*
 function handleChange(value) {
   console.log(`selected ${value}`);
@@ -113,7 +112,7 @@ class List extends Component {
   }
 
   clear() {
-    this.getapi("/list")
+    this.getapi("/movies")
   }
 
   match(content) {
@@ -140,7 +139,7 @@ class List extends Component {
   componentDidMount() {
     //let m=this.state.items;
     //console.log(`initialize ${m}`);
-    this.getapi("/list");
+    this.getapi("/movies");
 
     //let m=this.state.items;
   }
