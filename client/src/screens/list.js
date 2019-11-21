@@ -48,6 +48,16 @@ class List extends Component {
       .then(
         (result) => {
           console.log(result);
+
+          for (let i = 0; i < result.length; i++) {
+            if (result[i].img_url == null) {
+              console.log(`${result[i].title} here!`)
+              result[i].img_url="https://www.quantabiodesign.com/wp-content/uploads/No-Photo-Available.jpg"
+              console.log(`${result[i].img_url}`)
+              
+            }
+          }
+
           this.setState({
             isLoaded: true,
             items: result
@@ -66,6 +76,16 @@ class List extends Component {
           });
         }
       )
+   /* for (let i = 0; i < this.state.items.length; i++) {
+      if (this.state.items[i].img_url == null) {
+        console.log(`${this.state.items[i].title} here!`)
+        this.state.items[i].img_url="http://www.uoduckstore.com/c.3841022/sca-dev-montblanc/img/no_image_available.jpeg"
+        console.log(`${this.state.items[i].img_url}`)
+        this.forceUpdate()
+      }
+    }
+    */
+
   }
 
   constructor(props) {
@@ -78,17 +98,26 @@ class List extends Component {
     this.getapi = this.getapi.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.clear = this.clear.bind(this);
-    this.handleChange=this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(value) {
     console.log(value);
-    if("name"==value){
-      var m = this.state.items.title.sorter((a, b) => a.title > b.title);
-      this.setState({items:m});
-    }else if("time"==value){
-      var n = this.state.items.runtime.sorter((a, b) => a.runtime > b.runtime);
-      this.setState({items:n});
+    console.log([11, 101].sort())
+    if ("name" == value) {
+
+      var m = this.state.items.sort(function (o1, o2) {
+        return o1.title - o2.title;
+      });
+      this.setState({ items: m });
+
+    } else if ("time" == value) {
+
+      var n = this.state.items.sort(function (o1, o2) {
+        return o1.runtime - o2.runtime;
+      });
+      this.setState({ items: n });
+
     }
   }
 
@@ -271,8 +300,8 @@ class List extends Component {
             <Row type="flex" justify="end">
               <Col span={4}>
                 <Select defaultValue="Sort by: Featured" style={{ width: 170 }} onChange={this.handleChange}>
-                <Option value="name">Alphabetical order</Option>
-                <Option value="time">Runtime</Option>
+                  <Option value="name">Alphabetical order</Option>
+                  <Option value="time">Runtime</Option>
                 </Select>
               </Col>
             </Row>
