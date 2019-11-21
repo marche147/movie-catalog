@@ -71,7 +71,7 @@ class Info extends Component {
         <h1>Movie not found.</h1>
       );
     }
-    
+
     let comms = this.state.comments.filter((item) => { return md5(item.title) == params.id; });
     let data = this.normalize(d);
     let title = (
@@ -83,6 +83,15 @@ class Info extends Component {
     );
     let genre = data.genre.map((g) => <Tag key={ g }>{ g }</Tag>);
 
+    function scores(comms){
+      var s = 0;
+      for (var i=0; i<comms.length; i++)
+        {s += Number(comms[i].score);}
+      return (100*s/comms.length).toFixed(1);
+      console.log(s);
+    }
+    let grade = scores(comms);
+
     let make_comm = (item) => {
       let avatar = (
         <Avatar src={ Number.parseInt(item.score) != 0 ? "/upvote.png" : "/downvote.png" } />
@@ -91,8 +100,8 @@ class Info extends Component {
       return (
         <List.Item>
           <Skeleton avatar title={false} active loading={ false }>
-            <List.Item.Meta 
-              avatar={ avatar } 
+            <List.Item.Meta
+              avatar={ avatar }
               title={ item.review_title }
               description={ item.review_content }
             />
@@ -121,6 +130,11 @@ class Info extends Component {
         <Row>
           <Col span={ 9 } />
           <Col span={ 6 }><center><img src={ data.img_url } /></center></Col>
+          <Col span={ 9 } />
+        </Row>
+        <Row>
+          <Col span={ 9 } />
+          <Col span={ 6 }><center>{grade}%</center></Col>
           <Col span={ 9 } />
         </Row>
         <Row>
