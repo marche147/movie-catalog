@@ -98,46 +98,40 @@ class Home extends Component{
     const { error, isLoaded, items } = this.state;
     return (
       <Layout className="layout">
-        <Header>
-        <div className="logo" />
-        <Menu
-          theme="dark"
-         mode="horizontal"
-         defaultSelectedKeys={['2']}
-          style={{ lineHeight: '64px' }}
-      >
-        <Menu.Item key="1">
-          RT
-        </Menu.Item>
-        <Menu.Item key="2">IMDB</Menu.Item>
-        <Menu.Item key="3">Favorite</Menu.Item>
-       <Input
-            placeholder="Input Here"
-            id="search"
-            style={{ width: 200 }} />
-    <Button type="primary"  icon="search" onClick={this.handleClick}>
-      Search
-    </Button>        
-      </Menu>
-    </Header>
+      <Header>
+              <div className="logo" />
+              <Menu
+                theme="dark"
+               mode="horizontal"
+               defaultSelectedKeys={['2']}
+                style={{ lineHeight: '64px' }}
+            >
+              <Menu.Item key="1">
+                RT
+              </Menu.Item>
+              <Menu.Item key="2">IMDB</Menu.Item>
+              <Menu.Item key="3">Favorite</Menu.Item>       
+            </Menu>
+          </Header>
+
     <Content style={{ padding: '0 50px' }}>
 
-      <div style={{ background: '#fff', width: 960, padding: 24, minHeight: 280 }}>
+      <center><div style={{ background: '#fff', width: 960, padding: 24, minHeight: 280 }}>
       <Carousel autoplay>
         <div>
-          <img src ="/pic/1.png" />
+          <img src ="/pic/1.jpeg" />
         </div>
         <div>
-          <img  src="/pic/2.png" />
+          <img  src="/pic/2.jpeg" />
         </div>
         <div>
-          <img  src="/pic/3.png" />
+          <img  src="/pic/3.jpeg" />
         </div>
         <div>
-          <img  src="/pic/4.jpg" />
+          <img  src="/pic/4.jpeg" />
         </div>
         </Carousel>
-        </div>
+        </div></center>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
           <div style={{ background: '#ECECEC', padding: '30px' }}>
           <Row gutter={16}>
