@@ -119,16 +119,16 @@ class Home extends Component{
       <center><div style={{ background: '#fff', width: 960, padding: 24, minHeight: 280 }}>
       <Carousel autoplay>
         <div>
-          <img src ="/pic/1.png" />
+          <img src ="/pic/1.jpeg" />
         </div>
         <div>
-          <img  src="/pic/2.png" />
+          <img  src="/pic/2.jpeg" />
         </div>
         <div>
-          <img  src="/pic/3.png" />
+          <img  src="/pic/3.jpeg" />
         </div>
         <div>
-          <img  src="/pic/4.jpg" />
+          <img  src="/pic/4.jpeg" />
         </div>
         </Carousel>
         </div></center>
