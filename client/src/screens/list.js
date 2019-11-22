@@ -13,34 +13,14 @@ import { Spin } from 'antd';
 import md5 from 'crypto-js/md5';
 
 /* eslint-disable */
-const movies = [{ "id": 1, "name": "joker", "year": 2019, "director": "Joachim Ronning", "cast": "Angelina Jolie" },
-{ "id": 2, "name": "once upon a time in hollywood", "year": 2019, "director": "Quentin Tarantino", "cast": "Brad Pitt" },
-{ "id": 3, "name": "avengers: endgame", "year": 2019, "director": "Chris Buck", "cast": "Idina Menzel" },
-{ "id": 4, "name": "avengersd: endgame", "year": 20195, "director": "Chris Buckd", "cast": "Idina Menzeld" },
-{ "id": 5, "name": "avengersd: endgame", "year": 20195, "director": "Chris Buckd", "cast": "Idina Menzeld" },
-{ "id": 6, "name": "avengersd: endgame", "year": 20195, "director": "Chris Buckd", "cast": "Idina Menzeld" },
-{ "id": 14, "name": "avengers1: endgame", "year": 20191, "director": "Chris Buck1", "cast": "Idina Menzel1" }
-]
-
 const { Option } = Select;
 
-//function onSelect(value) {
-//console.log('onSelect', value);
-//}
+let capitalize = (title) => {
+  let words = title.split(" ");
+  let res = words.map((word) => { return word[0].toUpperCase() + word.substr(1); });
+  return res.join(" ");
+};
 
-/*
-function handleChange(value) {
-  console.log(`selected ${value}`);
-  if(value=="rate"){
-    sortById();
-  }else if (value=="time"){
-    console.log('2');
-  }
-}
-function sortById(){
-  console.log('ok')
-}
-*/
 class List extends Component {
   getapi = (text) => {
     fetch(text)
@@ -51,11 +31,13 @@ class List extends Component {
 
           for (let i = 0; i < result.length; i++) {
             if (result[i].img_url == null) {
-              console.log(`${result[i].title} here!`)
               result[i].img_url="https://www.quantabiodesign.com/wp-content/uploads/No-Photo-Available.jpg"
-              console.log(`${result[i].img_url}`)
-              
             }
+
+            if(result[i].runtime == null) {
+              result[i].runtime = "0";
+            }
+            result[i].runtime = Number.parseInt(result[i].runtime);
           }
 
           this.setState({
@@ -76,16 +58,6 @@ class List extends Component {
           });
         }
       )
-   /* for (let i = 0; i < this.state.items.length; i++) {
-      if (this.state.items[i].img_url == null) {
-        console.log(`${this.state.items[i].title} here!`)
-        this.state.items[i].img_url="http://www.uoduckstore.com/c.3841022/sca-dev-montblanc/img/no_image_available.jpeg"
-        console.log(`${this.state.items[i].img_url}`)
-        this.forceUpdate()
-      }
-    }
-    */
-
   }
 
   constructor(props) {
@@ -102,42 +74,28 @@ class List extends Component {
   }
 
   handleChange(value) {
-    console.log(value);
-    console.log([11, 101].sort())
     if ("name" == value) {
-
       var m = this.state.items.sort(function (o1, o2) {
-        return o1.title - o2.title;
+        if(o1.title < o2.title) return -1;
+        else if(o1.title > o2.title) return 1;
+        return 0;
       });
       this.setState({ items: m });
-
     } else if ("time" == value) {
-
       var n = this.state.items.sort(function (o1, o2) {
-        return o1.runtime - o2.runtime;
+        if(o1.runtime < o2.runtime) return -1;
+        else if(o1.runtime > o2.runtime) return 1;
+        return 0;
       });
       this.setState({ items: n });
-
     }
   }
 
 
 
   handleClick() {
-    //this.getapi("/list");
     let content = document.getElementById('search').value;
-    //console.log(content)
-    console.log(`hi`)
     this.match(content)
-    /*this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-    */
-
-    //this.getapi("/list");
-    //this.forceUpdate()
   }
 
   clear() {
@@ -145,47 +103,25 @@ class List extends Component {
   }
 
   match(content) {
-    console.log(content)
-    console.log(this.state.items.length)
     for (let i = 0; i < this.state.items.length; i++) {
       if (content == this.state.items[i].title) {
-        console.log(`its ${this.state.items[i]}`)
-        console.log(this.state.items[i])
-
         var m = [];
         m.push(this.state.items[i]);
-        console.log(m);
         this.setState({ items: m });
       }
     }
-
-    //let m=this.state.items[1]
-    //console.log(this.state.items[1].title)
-    //jokerthis.forceUpdate()
-    //console.log(`a new ${m}`)
-
   }
+  
   componentDidMount() {
-    //let m=this.state.items;
-    //console.log(`initialize ${m}`);
     this.getapi("/movies");
-
-    //let m=this.state.items;
   }
 
   onSearch = searchText => {
     let content = document.getElementById('search').value;
-    //console.log(content)
-    //this.setState({
-    //items: !searchText ? [] : [searchText, searchText.repeat(2), searchText.repeat(3)],
-
-    //});
   };
 
-  //let m=this.state.items;
   render() {
     const { error, isLoaded, items } = this.state;
-    //let itemsmap = items.map((m) => <div class="display"><li key={m._id}> <Link to={`/info/${m.id}`}> {m.title} </Link></li></div>)
     const { Meta } = Card;
 
     const menu = (
@@ -203,8 +139,6 @@ class List extends Component {
       </Menu>
     );
 
-    //let m=this.state.items;
-    //const listItems = movies.map((m) => <li key={m.id}> <Link to={`/info/${m.name}`}> {m.name} </Link></li>)
     let listItems = this.state.items.map((m) =>
       <div class="display">
         <div className="gutter-box">
@@ -215,7 +149,7 @@ class List extends Component {
               style={{ width: 200 }}
               cover={<img alt={m.title} src={m.img_url} />}
             >
-              <Meta title={m.title} description={m.release_date} />
+              <Meta title={ capitalize(m.title) } description={m.release_date} />
               <li key={md5(m.title)}> <Link to={`/info/${md5(m.title)}`}> info </Link></li>
             </Card>
           </Col>
@@ -238,11 +172,6 @@ class List extends Component {
             id="search"
             style={{ width: 200 }} />
           <button onClick={this.handleClick}>search</button>
-          <Dropdown overlay={menu}>
-            <a className="dropdown-link" href="#">
-              Top Movies <Icon type="down" />
-            </a>
-          </Dropdown>
           <br />
           <Row type="flex" justify="end">
             <Col span={4}>
@@ -291,11 +220,6 @@ class List extends Component {
               style={{ width: 200 }} />
             <button onClick={this.handleClick}>search</button>
             <button onClick={this.clear}>clear</button>
-            <Dropdown overlay={menu}>
-              <a className="dropdown-link" href="#">
-                Top Movies <Icon type="down" />
-              </a>
-            </Dropdown>
             <br />
             <Row type="flex" justify="end">
               <Col span={4}>

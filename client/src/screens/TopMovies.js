@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Tabs } from 'antd';
+import { Table, Tabs, Link } from 'antd';
+import md5 from 'crypto-js/md5';
 
 let { TabPane } = Tabs;
 
@@ -19,7 +20,7 @@ class TopMovies extends Component {
   }
 
   componentDidMount() {
-    this.retrieve().then((res) => this.setState({ data: this.normalize(res) })).catch((err) => console.log(err));
+    this.retrieve().then((res) => this.setState({ data: res })).catch((err) => console.log(err));
   }
 
   retrieve = async () => {
@@ -31,20 +32,17 @@ class TopMovies extends Component {
     return body;
   }
 
-  normalize = (data) => {
-    let result = data.map((datum) => {
-      datum.title = capitalize(datum.title);
-      return datum;
-    });
-    return result;
-  }
-
   render() {
     const rt_columns = [
       {
         title: "Title", 
         width: '20%',
         dataIndex: 'title',
+        render: (text) => { 
+          return (
+            <a href={ `/info/${md5(text)}` }>{ capitalize(text) }</a>
+          );
+        }
       },
       {
         title: "Rank",
@@ -74,6 +72,11 @@ class TopMovies extends Component {
         title: "Title",
         width: "20%",
         dataIndex: 'title',
+        render: (text) => {
+          return (
+            <a href={ `/info/${md5(text)}` }>{ capitalize(text) }</a>
+          );
+        }
       },
       {
         title: "Rank",
