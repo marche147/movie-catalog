@@ -10,11 +10,13 @@ import { Input } from 'antd';
 import { BackTop } from 'antd';
 import { Pagination } from 'antd';
 import { Spin } from 'antd';
+import { Layout } from 'antd';
+import { Button, Radio } from 'antd';
 import md5 from 'crypto-js/md5';
 
 /* eslint-disable */
 const { Option } = Select;
-
+const { Header, Footer, Sider, Content } = Layout;
 let capitalize = (title) => {
   let words = title.split(" ");
   let res = words.map((word) => { return word[0].toUpperCase() + word.substr(1); });
@@ -208,7 +210,10 @@ class List extends Component {
     } else {
       return (
         <div className="container">
+
           <div className="search">
+          <Layout>
+      <Header>Header
             <Select defaultValue="name" style={{ width: 90 }} onChange={this.handleChange}>
               <Option value="name">name</Option>
               <Option value="year">year</Option>
@@ -218,9 +223,11 @@ class List extends Component {
               placeholder="Input Here"
               id="search"
               style={{ width: 200 }} />
-            <button onClick={this.handleClick}>search</button>
-            <button onClick={this.clear}>clear</button>
+            <Button type="primary" onClick={this.handleClick}>search</Button>
+            <Button type="primary" onClick={this.clear}>clear</Button>
             <br />
+            </Header>
+            </Layout>
             <Row type="flex" justify="end">
               <Col span={4}>
                 <Select defaultValue="Sort by: Featured" style={{ width: 170 }} onChange={this.handleChange}>
