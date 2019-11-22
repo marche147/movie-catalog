@@ -53,6 +53,10 @@ class Info extends Component {
       data.runtime = Number.parseInt(data.runtime).toString() + " Minutes";
     }
 
+    if(data.img_url == undefined) {
+      data.img_url = "https://www.quantabiodesign.com/wp-content/uploads/No-Photo-Available.jpg";
+    }
+
     data.title = capitalize(data.title);
     return data;
   }
@@ -129,7 +133,7 @@ class Info extends Component {
       <div>
         <Row>
           <Col span={ 9 } />
-          <Col span={ 6 }><center><img src={ data.img_url } /></center></Col>
+          <Col span={ 6 }><center><img src={ data.img_url } width="200" height="250" /></center></Col>
           <Col span={ 9 } />
         </Row>
         <Row>
