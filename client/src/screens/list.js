@@ -308,7 +308,7 @@ class List extends Component {
           </div>
 
           <div className="home">
-            <Row>
+            <Row type="flex" justify="space-between">
               {listItems}
             </Row>
             <Route path="/info/:id" component={Info} />
