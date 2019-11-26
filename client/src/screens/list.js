@@ -76,6 +76,7 @@ class List extends Component {
   }
 
   handleChange(value) {
+    //console.log(value)
     if ("name" == value) {
       var m = this.state.items.sort(function (o1, o2) {
         if(o1.title < o2.title) return -1;
@@ -97,16 +98,26 @@ class List extends Component {
 
   handleClick() {
     let content = document.getElementById('search').value;
-    this.match(content)
+    let selection=document.getElementsByClassName('selection').value;
+    this.match(content,selection)
   }
 
   clear() {
     this.getapi("/movies")
   }
 
-  match(content) {
+  match(content,selection) {
+    console.log(`${content} + ${selection}`)
     for (let i = 0; i < this.state.items.length; i++) {
       if (content == this.state.items[i].title) {
+        var m = [];
+        m.push(this.state.items[i]);
+        this.setState({ items: m });
+      }else if(content == this.state.items[i].release_date){
+        var m = [];
+        m.push(this.state.items[i]);
+        this.setState({ items: m });
+      }else if(content == this.state.items[i].cast){
         var m = [];
         m.push(this.state.items[i]);
         this.setState({ items: m });
@@ -164,8 +175,8 @@ class List extends Component {
     if (error) {
       return (<div className="container">
         <div className="search">
-          <Select defaultValue="name" style={{ width: 90 }} onChange={this.handleChange}>
-            <Option value="name">name</Option>
+          <Select defaultValue="title" style={{ width: 90 }} onChange={this.handleChange}>
+            <Option value="title">title</Option>
             <Option value="year">year</Option>
             <Option value="cast">cast</Option>
           </Select>
@@ -214,8 +225,8 @@ class List extends Component {
           <div className="search">
           <Layout>
       <Header>Header
-            <Select defaultValue="name" style={{ width: 90 }} onChange={this.handleChange}>
-              <Option value="name">name</Option>
+            <Select className="selection" defaultValue="title" style={{ width: 90 }} onChange={this.handleChange}>
+              <Option value="title">title</Option>
               <Option value="year">year</Option>
               <Option value="cast">cast</Option>
             </Select>
